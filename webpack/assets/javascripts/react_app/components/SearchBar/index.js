@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { isEmpty } from 'lodash';
 import PropTypes from 'prop-types';
 import { SearchAutocomplete } from './SearchAutocomplete';
@@ -7,6 +7,11 @@ import Bookmarks from '../PF4/Bookmarks';
 import { changeQuery } from '../../common/urlHelpers';
 import { STATUS } from '../../constants';
 import { noop } from '../../common/helpers';
+import SearchChips from './SearchChips';
+import {
+  parseScopedSearchQuery,
+  removeFilterFromQuery,
+} from './ScopedSearchParser';
 
 const SearchBar = ({
   data: {
@@ -54,6 +59,15 @@ const SearchBar = ({
     status === STATUS.ERROR || response?.[0]?.error
       ? response?.[0]?.error || response.message
       : null;
+
+  const filters = useMemo(() => parseScopedSearchQuery(search), [search]);
+
+  const handleRemoveFilter = filterToRemove => {
+    const newQuery = removeFilterFromQuery(search, filterToRemove);
+    _onSearchChange(newQuery);
+    if (onSearch) _onSearch(newQuery);
+  };
+
   return (
     <div className="foreman-search-bar">
       <SearchAutocomplete
@@ -67,6 +81,7 @@ const SearchBar = ({
         error={error}
         name={name}
       />
+      <SearchChips filters={filters} onRemoveFilter={handleRemoveFilter} />
       {!isEmpty(bookmarks) && (
         <Bookmarks
           onBookmarkClick={newSearch => {
