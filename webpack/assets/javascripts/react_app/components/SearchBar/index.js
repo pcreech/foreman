@@ -70,30 +70,32 @@ const SearchBar = ({
 
   return (
     <div className="foreman-search-bar">
-      <SearchAutocomplete
-        results={
-          Array.isArray(response) && !response?.[0]?.error ? response : []
-        }
-        onSearchChange={_onSearchChange}
-        value={search}
-        onSearch={onSearch && _onSearch}
-        disabled={disabled}
-        error={error}
-        name={name}
-      />
-      <SearchChips filters={filters} onRemoveFilter={handleRemoveFilter} />
-      {!isEmpty(bookmarks) && (
-        <Bookmarks
-          onBookmarkClick={newSearch => {
-            _onSearchChange(newSearch);
-            if (onSearch) onSearch(newSearch);
-          }}
-          controller={controller}
-          searchQuery={search || ''}
-          bookmarksPosition={bookmarksPosition}
-          {...bookmarks}
+      <div className="foreman-search-bar-row">
+        <SearchAutocomplete
+          results={
+            Array.isArray(response) && !response?.[0]?.error ? response : []
+          }
+          onSearchChange={_onSearchChange}
+          value={search}
+          onSearch={onSearch && _onSearch}
+          disabled={disabled}
+          error={error}
+          name={name}
         />
-      )}
+        {!isEmpty(bookmarks) && (
+          <Bookmarks
+            onBookmarkClick={newSearch => {
+              _onSearchChange(newSearch);
+              if (onSearch) onSearch(newSearch);
+            }}
+            controller={controller}
+            searchQuery={search || ''}
+            bookmarksPosition={bookmarksPosition}
+            {...bookmarks}
+          />
+        )}
+      </div>
+      <SearchChips filters={filters} onRemoveFilter={handleRemoveFilter} />
     </div>
   );
 };

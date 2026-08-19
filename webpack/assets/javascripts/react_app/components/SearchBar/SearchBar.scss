@@ -14,8 +14,15 @@
 .foreman-search-bar {
   width: 100%;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: var(--pf-v5-global--spacer--sm);
+
+  .foreman-search-bar-row {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--pf-v5-global--spacer--sm);
+    width: 100%;
+  }
 
   .pf-v5-c-dropdown.pf-m-align-right {
     width: unset;
@@ -27,6 +34,5 @@
 
   .search-chips-container {
     width: 100%;
-    margin-top: var(--pf-v5-global--spacer--sm);
   }
 }
