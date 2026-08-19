@@ -69,8 +69,8 @@ const SearchBar = ({
   };
 
   return (
-    <div className="foreman-search-bar">
-      <div className="foreman-search-bar-row">
+    <>
+      <div className="foreman-search-bar">
         <SearchAutocomplete
           results={
             Array.isArray(response) && !response?.[0]?.error ? response : []
@@ -96,7 +96,7 @@ const SearchBar = ({
         )}
       </div>
       <SearchChips filters={filters} onRemoveFilter={handleRemoveFilter} />
-    </div>
+    </>
   );
 };
 
